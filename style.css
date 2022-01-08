@@ -10,16 +10,41 @@
 
 body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     width: 100vw;
     height: 100vh;
 }
 
+/* TODO cambiare colori e font */
+
+h1,
+h2 {
+    text-align: center;
+    margin: auto;
+}
+
+nav,
+footer {
+    display: flex;
+    width: 100vw;
+    text-align: center;
+    background-color: yellow;
+}
+
+nav{
+    height: 10vh;
+}
+
+footer {
+    height: 8vh;
+}
+
 .container {
     display: grid;
-    width: calc(16 * 2rem);
-    height: calc(16 * 2rem);
+    width: calc(16 * 1.75rem);
+    height: calc(16 * 1.75rem);
     grid-template-columns: repeat(16, 1fr);
     grid-template-rows: repeat(16, 1fr);
     grid-gap: 1px;
