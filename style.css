@@ -1,0 +1,9 @@
+:root {
+    --temp: 0;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+}
