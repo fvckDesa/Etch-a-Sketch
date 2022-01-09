@@ -1,12 +1,14 @@
 const container = document.querySelector(".container");
 const pen = document.querySelector("#pen-color");
 const background = document.querySelector("#background-color");
-const raimbow = document.querySelector(".raimbow");
+const rainbow = document.querySelector(".rainbow");
 const btnClear = document.querySelector(".clear");
+const gridTemplate = document.querySelector('#grid-template');
+const h3 = document.querySelector('h3');
 
+let n = 16;
 
-
-let n = 16 ** 2;
+let smallSquares;
 
 let color = "#000",
   bkgColor = "#fff";
@@ -21,19 +23,28 @@ background.addEventListener("input", (e) => {
 });
 
 
-
-for (let i = 0; i < n; i++) {
-  const smallSquare = document.createElement("div");
-  smallSquare.classList.add("small-square");
-  container.appendChild(smallSquare);
-  ["click", "mousemove"].forEach((event) => {
-    smallSquare.addEventListener(event, () => {
-      smallSquare.style.backgroundColor = color;
-    });
-  });
+const createGrid = () => {
+    container.style.cssText = `grid-template-columns: repeat(${n}, 1fr); grid-template-rows: repeat(${n}, 1fr)`;
+    for (let i = 0; i < n ** 2; i++) {
+      const smallSquare = document.createElement("div");
+      smallSquare.classList.add("small-square");
+      smallSquare.classList.add("border-top-left");
+      container.appendChild(smallSquare);
+        smallSquare.addEventListener('mousemove', () => {
+          smallSquare.style.backgroundColor = color;
+        });
+    }
+    smallSquares = document.querySelectorAll(".small-square");
 }
 
-const smallSquares = document.querySelectorAll(".small-square");
+createGrid();
+
+gridTemplate.addEventListener('input', (e) => {
+    n = e.target.value;
+    h3.innerText = `${n}x${n}`;
+    container.replaceChildren([]);
+    createGrid();
+});
 
 const randomColor = () => {
     let colors = [];
@@ -43,7 +54,7 @@ const randomColor = () => {
     return colors;
 }
 
-raimbow.addEventListener("click", () => {
+rainbow.addEventListener("click", () => {
     smallSquares.forEach(smallSquare => {
         smallSquare.addEventListener('mouseover', () => {
             const [red, green, blue] = randomColor();

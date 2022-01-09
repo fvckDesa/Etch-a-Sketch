@@ -1,5 +1,15 @@
+@font-face {
+  font-family: 'japanese';
+  src: url(./fonts/go3v2.ttf);
+}
+
 :root {
-  --temp: 0;
+  --phthalo-green: #203223;
+  --kombu-green: #293D2B;
+  --hunter-green: #415D43;
+  --russian-green: #709775;
+  --dark-sea-green: #8FB996;
+  --tea-green: #c1ffc7;
 }
 
 *,
@@ -7,23 +17,33 @@
 *::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  /* cursor: default; */
 }
 
 body {
+  font-family: 'japanese', sans-serif;
+  letter-spacing: 2px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: lightgray;
+  background-color: var(--dark-sea-green);
+  background-image: url("./image/homes-forest.jpg");
+  background-size: cover;
+  background-position: center;
 }
-
-/* TODO cambiare colori, font e dimensione caratteri */
 
 h1,
 h2 {
   text-align: center;
+}
+
+h1 {
+  font-size: 50px;
+  line-height: 55px;
 }
 
 nav,
@@ -33,11 +53,12 @@ footer {
   align-items: center;
   width: 100vw;
   text-align: center;
-  background-color: yellow;
+  color: var(--tea-green);
 }
 
 nav {
   height: 10vh;
+  background-color: var(--phthalo-green);
 }
 
 main {
@@ -48,11 +69,12 @@ main {
 
 aside {
     width: 225px;
-    height: 90%;
+    height: 95%;
     padding: 1rem;
     margin-block: auto;
     border-radius: 2rem;
-    background-color: gray;
+    color: var(--tea-green);
+    background-color: var(--hunter-green);
 }
 
 footer {
@@ -66,6 +88,7 @@ footer {
   grid-template-columns: repeat(16, 1fr);
   grid-template-rows: repeat(16, 1fr);
   background-color: white;
+  margin-left: 2.5rem;
 }
 
 .small-square {
@@ -90,7 +113,7 @@ footer {
     margin-block: 1rem;
 }
 
-.raimbow {
+.rainbow {
     width: 50px;
     height: 50px;
     background: linear-gradient(-45deg, red, orange, yellow, green, blue, indigo, violet, red);
@@ -101,6 +124,16 @@ footer {
   height: 50px;
   border-radius: 5px;
   margin-top: 1rem;
+  color: var(--tea-green);
+  background-color: var(--phthalo-green);
+}
+
+.clear:hover {
+  background-color: var(--kombu-green);
+}
+
+.clear:active {
+  background-color: var(--dark-sea-green);
 }
 
 .grid-colums-rows {
@@ -114,7 +147,7 @@ footer {
 }
 
 .fa-github {
-  fill: black;
+  fill: var(--tea-green);
   transition: transform 0.3s ease-in-out;
   margin-left: 0.5rem;
 }
