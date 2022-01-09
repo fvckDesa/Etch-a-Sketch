@@ -1,63 +1,127 @@
 :root {
-    --temp: 0;
+  --temp: 0;
 }
 
 *,
 *::before,
 *::after {
-    margin: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: lightgray;
 }
 
-/* TODO cambiare colori e font */
+/* TODO cambiare colori, font e dimensione caratteri */
 
 h1,
 h2 {
-    text-align: center;
-    margin: auto;
+  text-align: center;
 }
 
 nav,
 footer {
-    display: flex;
-    width: 100vw;
-    text-align: center;
-    background-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  text-align: center;
+  background-color: yellow;
 }
 
-nav{
-    height: 10vh;
+nav {
+  height: 10vh;
+}
+
+main {
+    width: 90vw;
+    display: flex;
+    gap: 6rem;
+}
+
+aside {
+    width: 225px;
+    height: 90%;
+    padding: 1rem;
+    margin-block: auto;
+    border-radius: 2rem;
+    background-color: gray;
 }
 
 footer {
-    height: 8vh;
+  height: 8vh;
 }
 
 .container {
-    display: grid;
-    width: calc(16 * 1.75rem);
-    height: calc(16 * 1.75rem);
-    grid-template-columns: repeat(16, 1fr);
-    grid-template-rows: repeat(16, 1fr);
-    grid-gap: 1px;
-    border: solid 5px black;
-    background-color: lightgray;
+  display: grid;
+  width: calc(16 * 1.75rem);
+  height: calc(16 * 1.75rem);
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: repeat(16, 1fr);
 }
 
 .small-square {
-    width: 100%;
-    height: 100%;
-    background-color: white;
+  width: 100%;
+  height: 100%;
+  background-color: white;
 }
 
 .small-square:hover {
-    background-color: black;
+  background-color: black;
+}
+
+.color-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-block: 1rem;
+}
+
+.raimbow {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(-45deg, red, orange, yellow, green, blue, indigo, violet, red);
+}
+
+.grid-colums-rows {
+    margin-top: 5rem;
+}
+
+.grid-colums-rows > * {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.fa-github {
+  fill: black;
+  transition: transform 0.3s ease-in-out;
+  margin-left: 0.5rem;
+}
+
+.fa-github:hover {
+  transform: rotate(360deg) scale(1.2);
+}
+
+
+
+input[type="color"] {
+    width: 100px;
+    height: 100px;
+    transform: translateX(-10px) translateY(-10px);
+}
+
+.color-box {
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    justify-content: stretch;
 }
