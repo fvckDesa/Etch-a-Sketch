@@ -2,14 +2,18 @@ const container = document.querySelector(".container");
 const penColor = document.querySelector("#pen-color");
 const background = document.querySelector("#background-color");
 const pen = document.querySelector("#pen-card");
-const rainbow = document.querySelector("#rainbow-card");
+const rainbow = document.querySelector('#rainbow-card');
+const random = document.querySelector("#random-card");
 const btnClear = document.querySelector(".clear");
 const gridTemplate = document.querySelector("#grid-template");
 const h3 = document.querySelector("h3");
 const penAnimation = document.querySelector("#behind-pen");
-const rainbowAnimation = document.querySelector("#behind-rainbow");
-const info = document.querySelector('#info-btn');
-const reference = document.querySelector('.reference');
+const rainbowAnimation = document.querySelector('#behind-rainbow');
+const randomAnimation = document.querySelector("#behind-random");
+const info = document.querySelector("#info-btn");
+const reference = document.querySelector(".reference");
+const gridBtn = document.querySelector("#grid-card");
+const gridAnimation = document.querySelector("#behind-grid");
 
 let n = 16;
 
@@ -18,21 +22,47 @@ let smallSquares;
 let color = "#000",
   bkgColor = "#fff";
 
-let checkRainbow = false;
+let checkPrint = "pen";
 let mousedown = false;
 
 function switchColor() {
-  penAnimation.classList.toggle("color-active");
-  rainbowAnimation.classList.toggle("color-active");
-  !checkRainbow ? (checkRainbow = true) : (checkRainbow = false);
+  penAnimation.classList.remove("color-active");
+  randomAnimation.classList.remove("color-active");
+  rainbowAnimation.classList.remove("color-active");
+  switch(checkPrint) {
+    case 'pen':
+      penAnimation.classList.add('color-active');
+      break;
+    case 'rainbow':
+      rainbowAnimation.classList.add('color-active');
+      break;
+    case 'random':
+      randomAnimation.classList.add('color-active');
+      break;
+  }
+}
+
+function randomRGB() {
+  const [red, blue, green] = randomColor();
+  return `rgb(${red}, ${blue}, ${green})`;
+}
+
+function rainbowColor() {
+  const rainbowColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+  return rainbowColors[Math.floor(Math.random() * 6)];
 }
 
 function draw(smallSquare) {
-  if (!checkRainbow) {
-    smallSquare.style.backgroundColor = color;
-  } else {
-    const [red, blue, green] = randomColor();
-    smallSquare.style.backgroundColor = `rgb(${red}, ${blue}, ${green})`;
+  switch(checkPrint) {
+    case 'pen':
+      smallSquare.style.backgroundColor = color;
+      break;
+    case 'rainbow':
+      smallSquare.style.backgroundColor = rainbowColor();
+      break;
+    case 'random':
+      smallSquare.style.backgroundColor = randomRGB();
+      break;
   }
 }
 
@@ -41,20 +71,21 @@ const createGrid = () => {
   for (let i = 0; i < n ** 2; i++) {
     const smallSquare = document.createElement("div");
     smallSquare.classList.add("small-square");
-    smallSquare.classList.add("border-top-left");
+    if (gridAnimation.classList.length > 1) {
+      smallSquare.classList.add("border-top-left");
+    }
     container.appendChild(smallSquare);
-    smallSquare.addEventListener('mousedown', () => {
+    smallSquare.addEventListener("mousedown", () => {
       mousedown = true;
       draw(smallSquare);
     });
-    smallSquare.addEventListener('mouseup', () => {
+    smallSquare.addEventListener("mouseup", () => {
       mousedown = false;
     });
     smallSquare.addEventListener("mouseenter", () => {
-      if(mousedown){
+      if (mousedown) {
         draw(smallSquare);
       }
-      console.log(mousedown);
     });
   }
   smallSquares = document.querySelectorAll(".small-square");
@@ -63,10 +94,19 @@ const createGrid = () => {
 createGrid();
 
 penColor.addEventListener("input", (e) => {
+  e.stopImmediatePropagation()
   color = e.target.value;
 });
 
-pen.addEventListener("click", switchColor);
+pen.addEventListener("click", () => {
+  checkPrint = 'pen';
+  switchColor();
+});
+
+rainbow.addEventListener("click", () => {
+  checkPrint = 'rainbow';
+  switchColor();
+});
 
 background.addEventListener("input", (e) => {
   bkgColor = e.target.value;
@@ -88,7 +128,17 @@ const randomColor = () => {
   return colors;
 };
 
-rainbow.addEventListener("click", switchColor);
+function randomBckColor() {
+  random.children[1].style.cssText = `background: linear-gradient(-45deg, ${randomRGB()}, ${randomRGB()}, ${randomRGB()}, ${randomRGB()}, ${randomRGB()}, ${randomRGB()}, ${randomRGB()});`;
+}
+
+randomBckColor();
+
+random.addEventListener("click", () => {
+  checkPrint = 'random';
+  switchColor();
+  randomBckColor();
+});
 
 btnClear.addEventListener("click", () => {
   smallSquares.forEach((smallSquare) => {
@@ -99,14 +149,21 @@ btnClear.addEventListener("click", () => {
 
 function addClass() {
   setTimeout(() => {
-    reference.classList.add('visibility');
-  }, 100);
+    reference.classList.add("visibility");
+  }, 300);
 }
 
 function removeClass() {
-  reference.classList.remove('visibility');
+  reference.classList.remove("visibility");
 }
 
-info.addEventListener('mouseover', removeClass);
+info.addEventListener("mouseover", removeClass);
 
-info.addEventListener('mouseleave', addClass);
+info.addEventListener("mouseleave", addClass);
+
+gridBtn.addEventListener("click", () => {
+  gridAnimation.classList.toggle("grid-active");
+  smallSquares.forEach((smallSquare) => {
+    smallSquare.classList.toggle("border-top-left");
+  });
+});
