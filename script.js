@@ -8,6 +8,8 @@ const gridTemplate = document.querySelector("#grid-template");
 const h3 = document.querySelector("h3");
 const penAnimation = document.querySelector("#behind-pen");
 const rainbowAnimation = document.querySelector("#behind-rainbow");
+const info = document.querySelector('#info-btn');
+const reference = document.querySelector('.reference');
 
 let n = 16;
 
@@ -78,4 +80,12 @@ btnClear.addEventListener("click", () => {
     smallSquare.style.backgroundColor = "transparent";
   });
   container.style.backgroundColor = bkgColor;
+});
+
+info.addEventListener('mouseover', () => {
+  reference.classList.toggle('visibility');
+});
+
+info.addEventListener('mouseleave', () => {
+  reference.classList.toggle('visibility');
 });
