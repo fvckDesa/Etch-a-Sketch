@@ -1,14 +1,14 @@
 @font-face {
-  font-family: 'japanese';
+  font-family: "japanese";
   src: url(./fonts/go3v2.ttf);
 }
 
 :root {
   --phthalo-green: #203223;
-  --kombu-green: #293D2B;
-  --hunter-green: #415D43;
+  --kombu-green: #293d2b;
+  --hunter-green: #415d43;
   --russian-green: #709775;
-  --dark-sea-green: #8FB996;
+  --dark-sea-green: #8fb996;
   --tea-green: #c1ffc7;
 }
 
@@ -22,7 +22,7 @@
 }
 
 body {
-  font-family: 'japanese', sans-serif;
+  font-family: "japanese", sans-serif;
   letter-spacing: 2px;
   display: flex;
   flex-direction: column;
@@ -62,23 +62,33 @@ nav {
 }
 
 main {
-    width: 90vw;
-    display: flex;
-    gap: 6rem;
+  width: 90vw;
+  display: flex;
+  gap: 6rem;
 }
 
 aside {
-    width: 225px;
-    height: 95%;
-    padding: 1rem;
-    margin-block: auto;
-    border-radius: 2rem;
-    color: var(--tea-green);
-    background-color: var(--hunter-green);
+  width: 225px;
+  height: 95%;
+  padding: 1rem;
+  margin-block: auto;
+  border-radius: 2rem;
+  color: var(--tea-green);
+  background-color: var(--hunter-green);
+}
+
+input[type="color"] {
+  width: 100px;
+  height: 100px;
+  transform: translateX(-10px) translateY(-10px);
+}
+
+span {
+  z-index: 3;
 }
 
 footer {
-  height: 8vh;
+  height: 9vh;
 }
 
 .container {
@@ -103,20 +113,54 @@ footer {
 }
 
 .pointer:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
 
+
 .color-card {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-block: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-block: 1rem;
+}
+
+.color-box {
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  justify-content: stretch;
+  z-index: 1;
 }
 
 .rainbow {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(-45deg, red, orange, yellow, green, blue, indigo, violet, red);
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(
+    -45deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet,
+    red
+  );
+}
+
+.color{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 60px;
+  background-color: var(--phthalo-green);
+  transition: width 0.5s ease;
+  z-index: 0;
+}
+
+.color-active {
+  width: 200px;
 }
 
 .clear {
@@ -137,13 +181,13 @@ footer {
 }
 
 .grid-colums-rows {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .grid-colums-rows > * {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 0.5rem;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
 .fa-github {
@@ -156,18 +200,9 @@ footer {
   transform: rotate(360deg) scale(1.2);
 }
 
-
-
-input[type="color"] {
-    width: 100px;
-    height: 100px;
-    transform: translateX(-10px) translateY(-10px);
-}
-
-.color-box {
-    overflow: hidden;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    justify-content: stretch;
+.info {
+  width: 32px;
+  border-radius: 50%;
+  background-color: var(--tea-green);
+  margin-left: 1rem;
 }
