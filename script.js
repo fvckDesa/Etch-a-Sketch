@@ -19,11 +19,21 @@ let color = "#000",
   bkgColor = "#fff";
 
 let checkRainbow = false;
+let mousedown = false;
 
 function switchColor() {
   penAnimation.classList.toggle("color-active");
   rainbowAnimation.classList.toggle("color-active");
   !checkRainbow ? (checkRainbow = true) : (checkRainbow = false);
+}
+
+function draw(smallSquare) {
+  if (!checkRainbow) {
+    smallSquare.style.backgroundColor = color;
+  } else {
+    const [red, blue, green] = randomColor();
+    smallSquare.style.backgroundColor = `rgb(${red}, ${blue}, ${green})`;
+  }
 }
 
 const createGrid = () => {
@@ -33,13 +43,18 @@ const createGrid = () => {
     smallSquare.classList.add("small-square");
     smallSquare.classList.add("border-top-left");
     container.appendChild(smallSquare);
-    smallSquare.addEventListener("mouseover", () => {
-      if (!checkRainbow) {
-        smallSquare.style.backgroundColor = color;
-      } else {
-        const [red, blue, green] = randomColor();
-        smallSquare.style.backgroundColor = `rgb(${red}, ${blue}, ${green})`;
+    smallSquare.addEventListener('mousedown', () => {
+      mousedown = true;
+      draw(smallSquare);
+    });
+    smallSquare.addEventListener('mouseup', () => {
+      mousedown = false;
+    });
+    smallSquare.addEventListener("mouseenter", () => {
+      if(mousedown){
+        draw(smallSquare);
       }
+      console.log(mousedown);
     });
   }
   smallSquares = document.querySelectorAll(".small-square");
@@ -82,10 +97,16 @@ btnClear.addEventListener("click", () => {
   container.style.backgroundColor = bkgColor;
 });
 
-info.addEventListener('mouseover', () => {
-  reference.classList.toggle('visibility');
-});
+function addClass() {
+  setTimeout(() => {
+    reference.classList.add('visibility');
+  }, 100);
+}
 
-info.addEventListener('mouseleave', () => {
-  reference.classList.toggle('visibility');
-});
+function removeClass() {
+  reference.classList.remove('visibility');
+}
+
+info.addEventListener('mouseover', removeClass);
+
+info.addEventListener('mouseleave', addClass);
