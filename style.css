@@ -151,7 +151,7 @@ footer {
   height: calc(16 * 1.75rem);
   grid-template-columns: repeat(16, 1fr);
   grid-template-rows: repeat(16, 1fr);
-  background-color: white;
+  /* background-color: white; */
 }
 
 .small-square {
