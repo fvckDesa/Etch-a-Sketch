@@ -14,6 +14,8 @@ const info = document.querySelector("#info-btn");
 const reference = document.querySelector(".reference");
 const gridBtn = document.querySelector("#grid-card");
 const gridAnimation = document.querySelector("#behind-grid");
+const rubberBtn = document.querySelector("#rubber-card");
+const rubberAnimation = document.querySelector("#behind-rubber");
 
 let n = +JSON.parse(localStorage.getItem("num")) || 16;
 h3.innerHTML = `${n}x${n}`;
@@ -99,14 +101,14 @@ const createGrid = () => {
       smallSquare.classList.add("border-top-left");
     }
     container.appendChild(smallSquare);
-    smallSquare.addEventListener("mousedown", () => {
+    smallSquare.addEventListenerWithName("printMouseDown", "mousedown", () => {
       mousedown = true;
       draw(smallSquare);
     });
-    smallSquare.addEventListener("mouseup", () => {
+    smallSquare.addEventListenerWithName("dontPrintMouseUp", "mouseup", () => {
       mousedown = false;
     });
-    smallSquare.addEventListener("mouseenter", () => {
+    smallSquare.addEventListenerWithName("printMouseEnter", "mouseenter", () => {
       if (mousedown) {
         draw(smallSquare);
       }
@@ -127,12 +129,24 @@ pen.addEventListener("click", () => {
   checkPrint = "pen";
   localStorage.setItem("checkPrint", JSON.stringify(checkPrint));
   switchColor();
+  rubberAnimation.classList.remove("option-active");
+  smallSquares.forEach(smallSquare => {
+    smallSquare.removeEventListenerWithName("rubberClick");
+    smallSquare.addEventListenerWithName("printMouseDown");
+    smallSquare.addEventListenerWithName("printMouseEnter");
+  });
 });
 
 rainbow.addEventListener("click", () => {
   checkPrint = "rainbow";
   localStorage.setItem("checkPrint", JSON.stringify(checkPrint));
   switchColor();
+  rubberAnimation.classList.remove("option-active");
+  smallSquares.forEach(smallSquare => {
+    smallSquare.removeEventListenerWithName("rubberClick");
+    smallSquare.addEventListenerWithName("printMouseDown");
+    smallSquare.addEventListenerWithName("printMouseEnter");
+  });
 });
 
 background.addEventListener("input", (e) => {
@@ -169,6 +183,12 @@ random.addEventListener("click", () => {
   localStorage.setItem("checkPrint", JSON.stringify(checkPrint));
   switchColor();
   randomBckColor();
+  rubberAnimation.classList.remove("option-active");
+  smallSquares.forEach(smallSquare => {
+    smallSquare.removeEventListenerWithName("rubberClick");
+    smallSquare.addEventListenerWithName("printMouseDown");
+    smallSquare.addEventListenerWithName("printMouseEnter");
+  });
 });
 
 btnClear.addEventListener("click", () => {
@@ -194,12 +214,38 @@ info.addEventListener("mouseover", removeClass);
 info.addEventListener("mouseleave", addClass);
 
 gridBtn.addEventListener("click", () => {
-  gridAnimation.classList.toggle("grid-active");
+  gridAnimation.classList.toggle("option-active");
   smallSquares.forEach((smallSquare) => {
     smallSquare.classList.toggle("border-top-left");
   });
-  localStorage.setItem("grid", gridAnimation.classList.contains("grid-active"));
+  localStorage.setItem("grid", gridAnimation.classList.contains("option-active"));
 });
+
+rubberBtn.addEventListener("click", rubber);
+
+function rubber(){
+  rubberAnimation.classList.toggle("option-active");
+  if(rubberAnimation.classList.contains("option-active")){
+    penAnimation.classList.remove("color-active");
+    randomAnimation.classList.remove("color-active");
+    rainbowAnimation.classList.remove("color-active");
+    smallSquares.forEach((smallSquare) => {
+      smallSquare.removeEventListenerWithName("printMouseDown");
+      smallSquare.removeEventListenerWithName("printMouseEnter");
+      smallSquare.addEventListenerWithName("rubberClick", "click", (e) => {
+        e.target.style.backgroundColor = "transparent";
+        localStorage.setItem("squares", JSON.stringify(squaresToArrOfHex()));
+      });
+    });
+  } else {
+    switchColor();
+    smallSquares.forEach(smallSquare => {
+      smallSquare.removeEventListenerWithName("rubberClick");
+      smallSquare.addEventListenerWithName("printMouseDown");
+      smallSquare.addEventListenerWithName("printMouseEnter");
+    });
+  }
+}
 
 function RGBToHex(RGB) {
   if (!RGB.match("rgb")) return "#0";

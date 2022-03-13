@@ -56,7 +56,6 @@ a:visited {
 
 nav,
 main,
-/* aside, */
 footer {
   display: flex;
   justify-content: center;
@@ -82,19 +81,23 @@ main {
 }
 
 aside {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 220px;
+  position: relative;
+  width: 240px;
   height: 100%;
   margin-block: auto;
-  gap: 1.5rem;
   color: var(--tea-green);
   overflow-y: scroll;
 }
 
 aside::-webkit-scrollbar {
-  display: none;
+  width: 10px; 
+  background-color: var(--hunter-green);
+
+}
+
+aside::-webkit-scrollbar-thumb {
+  background-color: var(--phthalo-green);
+  border-radius: 10px;
 }
 
 div {
@@ -136,13 +139,20 @@ footer {
 
 .aside-bkg {
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 95%;
-  width: 230px;
-  padding: 1rem;
-  border-radius: 2rem;
+  width: 240px;
+  padding: 1rem 0.5rem 1rem 1rem;
+  border-radius: 1.5rem;
   background-color: var(--hunter-green);
+}
+
+.container-aside {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 0.5rem;
+  gap: 1.5rem;
 }
 
 .container {
@@ -151,7 +161,6 @@ footer {
   height: calc(16 * 1.75rem);
   grid-template-columns: repeat(16, 1fr);
   grid-template-rows: repeat(16, 1fr);
-  /* background-color: white; */
 }
 
 .small-square {
@@ -215,7 +224,7 @@ footer {
   width: 100%;
 }
 
-.grid {
+.option {
   position: absolute;
   width: 100%;
   height: 0px;
@@ -225,14 +234,14 @@ footer {
   z-index: 0;
 }
 
-.grid + span {
+.option + span {
   width: 100%;
   height: 50px;
   text-align: center;
   line-height: 50px;
 }
 
-.grid-active {
+.option-active {
   height: 50px;
 }
 

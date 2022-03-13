@@ -10,6 +10,7 @@
       href="./favicon/favicon.ico"
       type="image/x-icon"
     />
+    <script type="module" src="node_modules/eventlistenerwithname/eventListenerWithName.js" defer></script>
     <script src="script.js" defer></script>
     <title>Etch a sketch</title>
   </head>
@@ -20,58 +21,64 @@
     <main>
       <div class="aside-bkg">
         <aside>
-          <div class="color-card pointer" id="pen-card">
-            <div class="color" id="behind-pen"></div>
-            <div class="color-box">
+          <div class="container-aside">
+            <div class="color-card pointer" id="pen-card">
+              <div class="color" id="behind-pen"></div>
+              <div class="color-box">
+                <input
+                  type="color"
+                  value="#000000"
+                  id="pen-color"
+                  class="pointer"
+                />
+              </div>
+              <span>PEN</span>
+            </div>
+            <div class="color-card pointer" id="rainbow-card">
+              <div class="color" id="behind-rainbow"></div>
+              <div class="color-box">
+                <div class="rainbow"></div>
+              </div>
+              <span>RAINBOW PEN</span>
+            </div>
+            <div class="color-card pointer" id="random-card">
+              <div class="color" id="behind-random"></div>
+              <div class="color-box">
+                <div class="random"></div>
+              </div>
+              <span>RANDOM PEN</span>
+            </div>
+            <div class="color-card">
+              <div class="color-box">
+                <input
+                  type="color"
+                  value="#ffffff"
+                  id="background-color"
+                  class="pointer"
+                />
+              </div>
+              <span>BACKGROUND</span>
+            </div>
+            <div class="color-card pointer" id="grid-card">
+              <div class="option option-active" id="behind-grid"></div>
+              <span>GRID</span>
+            </div>
+            <div class="color-card pointer" id="rubber-card">
+              <div class="option" id="behind-rubber"></div>
+              <span>RUBBER</span>
+            </div>
+            <button class="clear pointer">CLEAR</button>
+            <div class="grid-colums-rows">
+              <h3>16x16</h3>
               <input
-                type="color"
-                value="#000000"
-                id="pen-color"
+                type="range"
+                min="1"
+                max="64"
+                value="16"
+                id="grid-template"
                 class="pointer"
               />
             </div>
-            <span>PEN</span>
-          </div>
-          <div class="color-card pointer" id="rainbow-card">
-            <div class="color" id="behind-rainbow"></div>
-            <div class="color-box">
-              <div class="rainbow"></div>
-            </div>
-            <span>RAINBOW PEN</span>
-          </div>
-          <div class="color-card pointer" id="random-card">
-            <div class="color" id="behind-random"></div>
-            <div class="color-box">
-              <div class="random"></div>
-            </div>
-            <span>RANDOM PEN</span>
-          </div>
-          <div class="color-card">
-            <div class="color-box">
-              <input
-                type="color"
-                value="#ffffff"
-                id="background-color"
-                class="pointer"
-              />
-            </div>
-            <span>BACKGROUND</span>
-          </div>
-          <div class="color-card pointer" id="grid-card">
-            <div class="grid grid-active" id="behind-grid"></div>
-            <span>GRID</span>
-          </div>
-          <button class="clear pointer">CLEAR</button>
-          <div class="grid-colums-rows">
-            <h3>16x16</h3>
-            <input
-              type="range"
-              min="1"
-              max="64"
-              value="16"
-              id="grid-template"
-              class="pointer"
-            />
           </div>
         </aside>
       </div>
