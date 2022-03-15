@@ -31,7 +31,7 @@ background.value = bkgColor;
 container.style.backgroundColor = bkgColor;
 
 let checkPrint = JSON.parse(localStorage.getItem("checkPrint")) || "pen";
-switchColor();
+
 let mousedown = false;
 
 function switchColor() {
@@ -58,13 +58,13 @@ function randomRGB() {
 
 function rainbowColor() {
   const rainbowColors = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "indigo",
-    "violet",
+    "rgb(255,0,0)",
+    "rgb(255,165,0)",
+    "rgb(255,255,0)",
+    "rgb(0,255,0)",
+    "rgb(0,0,255)",
+    "rgb(63,15,183)",
+    "rgb(128,0,128)",
   ];
   return rainbowColors[Math.floor(Math.random() * 6)];
 }
@@ -97,7 +97,7 @@ const createGrid = () => {
       gridAnimation.classList.length > 1 ||
       JSON.parse(localStorage.getItem("grid")) === true
     ) {
-      gridAnimation.classList.toggle("grid-active");
+      gridAnimation.classList.add("option-active");
       smallSquare.classList.add("border-top-left");
     }
     container.appendChild(smallSquare);
@@ -119,6 +119,12 @@ const createGrid = () => {
 
 createGrid();
 
+if(JSON.parse(localStorage.getItem("rubber"))){
+  rubber();
+} else {
+  switchColor();
+}
+
 penColor.addEventListener("input", (e) => {
   e.stopImmediatePropagation();
   color = e.target.value;
@@ -128,6 +134,7 @@ penColor.addEventListener("input", (e) => {
 pen.addEventListener("click", () => {
   checkPrint = "pen";
   localStorage.setItem("checkPrint", JSON.stringify(checkPrint));
+  localStorage.setItem("rubber", JSON.stringify(false));
   switchColor();
   rubberAnimation.classList.remove("option-active");
   smallSquares.forEach(smallSquare => {
@@ -140,6 +147,7 @@ pen.addEventListener("click", () => {
 rainbow.addEventListener("click", () => {
   checkPrint = "rainbow";
   localStorage.setItem("checkPrint", JSON.stringify(checkPrint));
+  localStorage.setItem("rubber", JSON.stringify(false));
   switchColor();
   rubberAnimation.classList.remove("option-active");
   smallSquares.forEach(smallSquare => {
@@ -181,6 +189,7 @@ randomBckColor();
 random.addEventListener("click", () => {
   checkPrint = "random";
   localStorage.setItem("checkPrint", JSON.stringify(checkPrint));
+  localStorage.setItem("rubber", JSON.stringify(false));
   switchColor();
   randomBckColor();
   rubberAnimation.classList.remove("option-active");
@@ -226,6 +235,7 @@ rubberBtn.addEventListener("click", rubber);
 function rubber(){
   rubberAnimation.classList.toggle("option-active");
   if(rubberAnimation.classList.contains("option-active")){
+    localStorage.setItem("rubber", JSON.stringify(true));
     penAnimation.classList.remove("color-active");
     randomAnimation.classList.remove("color-active");
     rainbowAnimation.classList.remove("color-active");
@@ -238,6 +248,7 @@ function rubber(){
       });
     });
   } else {
+    localStorage.setItem("rubber", JSON.stringify(false));
     switchColor();
     smallSquares.forEach(smallSquare => {
       smallSquare.removeEventListenerWithName("rubberClick");
