@@ -24,8 +24,8 @@ const lightenAnimation = document.querySelector("#behind-lighten");
 const defaultJSON = JSON.stringify(null);
 let gridSize = +JSON.parse(localStorage.getItem("gridSize") ?? defaultJSON) || 16;
 let smallSquares;
-let color = JSON.parse(localStorage.getItem("color") ?? defaultJSON) || "#000";
-let bkgColor = JSON.parse(localStorage.getItem("bkgColor") ?? defaultJSON) || "#fff";
+let color = JSON.parse(localStorage.getItem("color") ?? defaultJSON) || "#000000";
+let bkgColor = JSON.parse(localStorage.getItem("bkgColor") ?? defaultJSON) || "#ffffff";
 let actionItem = JSON.parse(localStorage.getItem("actionItem") ?? defaultJSON) || "pen";
 let mousedown = false;
 
@@ -93,7 +93,7 @@ function createGrid() {
       }
     });
   }
-  smallSquares = document.querySelectorAll(".small-square");
+  smallSquares = [...document.querySelectorAll(".small-square")];
 }
 
 function action(smallSquare) {
@@ -115,7 +115,8 @@ function action(smallSquare) {
       squareStyle.backgroundColor = "transparent";
       break;
   }
-  localStorage.setItem("squares", JSON.stringify(squaresToArrOfHex()));
+
+  changeLocalStorageColors(squareStyle.backgroundColor, smallSquares.indexOf(smallSquare));
 }
 
 function randomColor() {
@@ -133,13 +134,13 @@ function randomRGB() {
 
 function rainbowColor() {
   const rainbowColors = [
-    "rgb(255,0,0)",
-    "rgb(255,165,0)",
-    "rgb(255,255,0)",
-    "rgb(0,255,0)",
-    "rgb(0,0,255)",
-    "rgb(63,15,183)",
-    "rgb(128,0,128)",
+    "#ff0000",
+    "#ffa500",
+    "#ffff00",
+    "#00ff00",
+    "#0000ff",
+    "#3f0fb7",
+    "#800080",
   ];
   return rainbowColors[Math.floor(Math.random() * 6)];
 }
@@ -156,32 +157,6 @@ function addClass() {
 
 function removeClass() {
   reference.classList.remove("visibility");
-}
-
-function rubberFun() {
-  rubberAnimation.classList.toggle("option-active");
-  if (rubberAnimation.classList.contains("option-active")) {
-    localStorage.setItem("rubber", JSON.stringify(true));
-    penAnimation.classList.remove("color-active");
-    randomAnimation.classList.remove("color-active");
-    rainbowAnimation.classList.remove("color-active");
-    smallSquares.forEach((smallSquare) => {
-      smallSquare.removeEventListenerWithName("printMouseDown");
-      smallSquare.removeEventListenerWithName("printMouseEnter");
-      smallSquare.addEventListenerWithName("rubberClick", "click", (e) => {
-        e.target.style.backgroundColor = "transparent";
-        localStorage.setItem("squares", JSON.stringify(squaresToArrOfHex()));
-      });
-    });
-  } else {
-    localStorage.setItem("rubber", JSON.stringify(false));
-    switchColor();
-    smallSquares.forEach((smallSquare) => {
-      smallSquare.removeEventListenerWithName("rubberClick");
-      smallSquare.addEventListenerWithName("printMouseDown");
-      smallSquare.addEventListenerWithName("printMouseEnter");
-    });
-  }
 }
 
 function RGBToHex(RGB) {
@@ -298,4 +273,13 @@ function toggleGrid() {
     "grid",
     gridAnimation.classList.contains("option-active")
   );
+}
+
+function changeLocalStorageColors(color, index) {
+  if(!localStorage.getItem("squares")) {
+    localStorage.setItem("squares", JSON.stringify(squaresToArrOfHex()));
+  }
+  let arr = JSON.parse(localStorage.getItem("squares"));
+  arr[index] = RGBToHex(color);
+  localStorage.setItem("squares", JSON.stringify(arr));
 }
