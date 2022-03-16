@@ -21,14 +21,16 @@ const lighten = document.querySelector("#lighten-card");
 const lightenAnimation = document.querySelector("#behind-lighten");
 
 //global var
-let gridSize = +JSON.parse(localStorage.getItem("num")) || 16;
+const defaultJSON = JSON.stringify(null);
+let gridSize = +JSON.parse(localStorage.getItem("gridSize") ?? defaultJSON) || 16;
 let smallSquares;
-let color = JSON.parse(localStorage.getItem("color")) || "#000";
-let bkgColor = JSON.parse(localStorage.getItem("bkgColor")) || "#fff";
-let actionItem = JSON.parse(localStorage.getItem("actionItem")) || "pen";
+let color = JSON.parse(localStorage.getItem("color") ?? defaultJSON) || "#000";
+let bkgColor = JSON.parse(localStorage.getItem("bkgColor") ?? defaultJSON) || "#fff";
+let actionItem = JSON.parse(localStorage.getItem("actionItem") ?? defaultJSON) || "pen";
 let mousedown = false;
 
 //active local storage
+switchItem([actionItem]);
 gridSizeDisplay.innerHTML = `${gridSize}x${gridSize}`;
 document.querySelector('input[type="range"]').value = gridSize;
 penColor.value = color;
@@ -37,8 +39,6 @@ container.style.backgroundColor = bkgColor;
 
 createGrid();
 randomBkgColor();
-
-
 
 penColor.addEventListener("input", changePenColor);
 background.addEventListener("input", changeBkgColor);
@@ -230,6 +230,7 @@ function LightenDarkenColor(col, amt) {
 
 function switchItem([item]) {
   actionItem = item;
+  localStorage.setItem("actionItem", JSON.stringify(item));
 
   penAnimation.classList.remove("color-active");
   rainbowAnimation.classList.remove("color-active");
@@ -281,7 +282,7 @@ function changeBkgColor(e) {
 
 function changeGridTemplate(e) {
   gridSize = e.target.value;
-  localStorage.setItem("num", JSON.stringify(gridSize));
+  localStorage.setItem("gridSize", JSON.stringify(gridSize));
   localStorage.removeItem("squares");
   gridSizeDisplay.innerText = `${gridSize}x${gridSize}`;
   container.replaceChildren([]);
