@@ -16,6 +16,8 @@ const gridBtn = document.querySelector("#grid-card");
 const gridAnimation = document.querySelector("#behind-grid");
 const rubberBtn = document.querySelector("#rubber-card");
 const rubberAnimation = document.querySelector("#behind-rubber");
+const lightenBtn = document.querySelector("#lighten-card");
+const lightenAnimation = document.querySelector("#behind-lighten");
 
 let n = +JSON.parse(localStorage.getItem("num")) || 16;
 h3.innerHTML = `${n}x${n}`;
@@ -270,4 +272,50 @@ function squaresToArrOfHex() {
   return [...document.querySelectorAll(".small-square")].map((el) => 
     RGBToHex(el.style.backgroundColor)
   );
+}
+
+lightenBtn.addEventListener("click", () => {
+  lightenAnimation.classList.toggle("option-active");
+  if(lightenAnimation.classList.contains("option-active")){
+    smallSquares.forEach(smallSquare => {
+      smallSquare.removeEventListenerWithName("rubberClick");
+      smallSquare.removeEventListenerWithName("printMouseDown");
+      smallSquare.removeEventListenerWithName("printMouseEnter");
+      smallSquare.addEventListenerWithName("lightenClick", "click", (e) => {
+        const elStyle = e.target.style;
+        let bgColor = elStyle.backgroundColor;
+        elStyle.backgroundColor = LightenDarkenColor(RGBToHex(bgColor), 30);
+        localStorage.setItem("squares", JSON.stringify(squaresToArrOfHex()));
+      });
+    });
+  } else {
+
+  }
+});
+
+function LightenDarkenColor(col, amt) {
+  let usePound = false;
+  if (col[0] == "#") {
+    col = col.slice(1);
+    usePound = true;
+  }
+
+  let num = parseInt(col, 16);
+
+  let r = (num >> 16) + amt;
+
+  if (r > 255) r = 255;
+  else if (r < 0) r = 0;
+
+  let b = ((num >> 8) & 0x00ff) + amt;
+
+  if (b > 255) b = 255;
+  else if (b < 0) b = 0;
+
+  let g = (num & 0x0000ff) + amt;
+
+  if (g > 255) g = 255;
+  else if (g < 0) g = 0;
+
+  return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
 }
