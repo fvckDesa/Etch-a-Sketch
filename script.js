@@ -177,6 +177,8 @@ function squaresToArrOfHex() {
 }
 
 function LightenDarkenColor(col, amt) {
+  if(col === "#0") return "transparent";
+
   let usePound = false;
   if (col[0] == "#") {
     col = col.slice(1);
