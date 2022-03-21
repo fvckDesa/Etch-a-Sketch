@@ -92,6 +92,8 @@ function createGrid() {
         action(e.target);
       }
     });
+    /* smallSquare.setAttribute("ondragstart", "return false"); */
+    smallSquare.addEventListener("dragstart", () => mousedown = false);
   }
   smallSquares = [...document.querySelectorAll(".small-square")];
 }
